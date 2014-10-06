@@ -1,0 +1,1 @@
+set !taskName!=%1

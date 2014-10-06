@@ -1,0 +1,50 @@
+// Set your userId and apiToken here
+userId = "SET_USER_ID_HERE";
+apiToken = "SET_API_TOKEN_HERE";
+
+//Set your proxy here
+//TODO Net yet implemented
+proxyHost = "";
+proxyPort = "";
+
+// Set your curl path here
+curlPath = "/usr/bin/curl";
+
+// API options
+apiEndpoint = "https://habitrpg.com:443/api/v2/";
+
+function newTask(taskName) {
+
+  message = "Adding new task '" ++ taskName ++ "'";
+  println(request);
+  println(message);
+
+  parameter1 = "'text=" ++ taskName ++ "'";
+  parameter2 = "'type=todo'";
+  println (apiRequest("POST", "user/tasks", parameter1, parameter2));
+
+}
+
+function getTasks()
+{
+	println (apiRequest("GET", "user/tasks","",""));
+}
+
+function apiRequest(method, action, parameter1, parameter2) {
+	
+	url = apiEndpoint ++ action;
+
+	apiKeyHeader  = "x-api-key: " ++ apiToken;
+	apiUserHeader = "x-api-user: " ++ userId;
+
+	println("Accessing " ++ url);
+	println("With parameters " ++ parameter1 ++ parameter2);
+
+	// TODO Add Proxy functionality
+	response = call("curl", proxyLine, "-s", "-H", apiKeyHeader, "-H" , apiUserHeader , "-X", method , "-d" , parameter1 , "-d", parameter2, url);
+
+	return response;
+}
+
+newTask(taskName);
+//getTasks();
